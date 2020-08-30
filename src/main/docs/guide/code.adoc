@@ -1,0 +1,43 @@
+The generated application contains a `BookController`. It responds to POST request to `/`.
+
+[source,kotlin]
+.src/main/kotlin/example/micronaut/BookController.kt
+----
+include::{sourceDir}/src/main/kotlin/example/micronaut/BookController.kt[]
+----
+
+<1> The class is defined as a controller with the `@Controller` annotation mapped to the path /
+<2> The `@Post` annotation is used to map HTTP request to `/` to the the `save` method.
+<3> Add the `@Valid` annotation to any method parameter's object which requires validation.
+
+The controller's method parameter is a `Book` object:
+
+[source,kotlin]
+.src/main/kotlin/example/micronaut/Book.kt
+----
+include::{sourceDir}/src/main/kotlin/example/micronaut/Book.kt[]
+----
+
+<1> Annotate the class with `@Introspected` to generate the Bean Metainformation at compile time.
+
+It returns a `BookSaved` object:
+
+[source,kotlin]
+.src/main/kotlin/example/micronaut/BookSaved.kt
+----
+include::{sourceDir}/src/main/kotlin/example/micronaut/BookSaved.kt[]
+----
+
+<1> Annotate the class with `@Introspected` to generate the Bean Metainformation at compile time.
+
+The generated tests illustrates how the code works when the lambda gets invoked:
+
+[source,kotlin]
+.src/test/kotlin/example/micronaut/BookControllerTest.kt
+----
+include::{sourceDir}/src/test/kotlin/example/micronaut/BookControllerTest.kt[]
+----
+
+<1> When you instantiate the Handler, the application context starts.
+<2> Remember to close your application context when you end your test. You can use your handler to obtain it.
+<3> You don't invoke the controller directly. Instead, your handler receives a AWS Proxy Request event which it is routed transparently to your controller.
